@@ -1,0 +1,11 @@
+﻿<h1>Регистрация</h1>
+{% if valid_hash %}
+	<form method="POST" action="">
+		<table>
+			{{ formset }}
+		</table>
+		<input type="submit" />
+	</form>
+{% else %}
+	Извините, мест больше нет!
+{% endif %}

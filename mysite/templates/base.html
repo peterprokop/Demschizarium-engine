@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <title>{% block title %}Суверенный демшизарий{% endblock %}</title>
+</head>
+
+<body>
+<center>
+	<table cellpadding="16" valign="top" width="900px">
+	<tr>
+	<td valign="top"  width="25%">
+    <div id="sidebar" style="border: 1px solid; padding: 3px;">
+        {% block sidebar %}
+			{% if user.is_authenticated %}
+				Мы соскучились по тебе, <b>{{ user }}</b>!
+				<p>
+					<ul>
+						<li><a href="{% url people.views.myuser_profile %}">Профиль</a></li>
+						<li><a href="{% url people.views.send_invite %}">Выслать приглашение</a></li>
+						<li><a href="{% url people.views.myuser_profile_change %}">Изменить профиль</a></li>
+						<li><a href="{% url people.views.mail_inbox %}">Почта</a></li>
+						<li><a href="{% url django.contrib.auth.views.logout %}">Выйти</a></li>
+						{#<li><a href="{% url people.views.col_blog %}">Коллектинвый разум</a></li>#}
+					</ul>
+				</p>
+			{% endif %}
+		{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+        
+        {% endblock %}
+		
+		{% block user-related %}
+		{% endblock %}
+    </div>
+	</td>
+	<td valign="top" width="75%">
+		<div id="content">
+			{% block content %}{% endblock %}
+		</div>
+	</td>
+	</tr>
+	</table>
+</center>
+</body>
+</html>

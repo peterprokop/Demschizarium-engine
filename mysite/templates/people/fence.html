@@ -1,0 +1,20 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Накалякать на заборе</h1>
+{% if user.is_authenticated %}
+
+	<form method="post" action="{% url people.views.fence_write recipient_id %}">
+		<table>
+		{{ form }}				
+		</table>
+		{# <input type="hidden" name="next" value="{% url people.views.mail %}" /> #}
+		<p><input type="submit" value="Отправить" /></p>
+	</form>
+
+{% else %}
+	Вы должны зайти чтобы сделать это!
+{% endif %}
+
+{% endblock%}

@@ -1,0 +1,24 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Выслать приглашение</h1>
+{% if user.is_authenticated %}
+	Осталось приглашений: {{number_of_invites}}
+	<form method="post" action="{% url people.views.send_invite %}">
+	{% csrf_token %}
+		<table>
+			{{ form }}
+			
+			<input type="hidden" name="next" value="{% url people.views.send_invite %}" />
+			
+		</table>
+		
+		<p><input type="submit" value="Отправить" /></p>
+	
+	</form>
+{% else %}
+	Вы должны зайти чтобы высылать приглашения!
+{% endif %}
+
+{% endblock%}

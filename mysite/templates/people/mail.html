@@ -1,0 +1,17 @@
+﻿{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Почта</h1>
+<a href="{% url people.views.mail_inbox%}" >Входящие</a>
+<a href="{% url people.views.mail_sent%}" >Выходящие</a>
+<a href="{% url people.views.mail_compose%}" >Сочинить</a>
+{% if user.is_authenticated %}
+
+	{% block mail_content %}
+	{% endblock%}
+{% else %}
+	Вы должны зайти чтобы пользоваться почтой!
+{% endif %}
+
+{% endblock%}

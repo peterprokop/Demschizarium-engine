@@ -1,0 +1,23 @@
+﻿{% extends "people/mail.html" %}
+
+{% block mail_content %}
+<p>Входящие:</p>
+	{% if inbox %}
+		<table border="1">
+			<tr>
+				<td>От</td>
+				<td>Тема</td>
+				<td>Текст</td>
+			</tr>
+			{% for message in inbox%}
+			<tr>
+				<td>{{ message.author }}</td>
+				<td>{{ message.subject }}</td>
+				<td>{{ message.body }}</td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% else %}
+		Здесь пока ничего нет
+	{% endif %}
+{% endblock%}

@@ -1,0 +1,95 @@
+﻿{% extends "base.html" %}
+{% block content %}
+	<h1>
+		{{ object }}
+		{% if friendable %}
+		(<a href="{% url people.views.myuser_make_friends user_id=object.id %}">Подружиться</a>)
+		{% endif %}
+	</h1>
+	<table>
+	<tr>
+	<td valign="top" style="border-right: 2px dashed;">
+		{% if object.userpic %}
+			<p  align="center"> <img hspace="5" src="{{  object.userpic.url }}" /> </p>
+			<p style="border-bottom: 1px dashed;"></p>
+		{% endif %}
+		
+		
+		<p>
+			{%if object.friends.all%}
+				Друзья: 
+				<table>
+				{% for user in object.friends.all %}
+				    {% cycle '<tr style="vertical-align: bottom;">' '' ''  %}
+				    <td style="text-align: center;" >
+					{% if user.userpic %}
+						<a href="{% url people.views.myuser_detail object_id=user.id %}">
+						<img border="0" hspace="2" src="{{  user.userpic.thumbnail.url }}" /></a>
+						<br />						
+					{% endif %}
+					<a href="{% url people.views.myuser_detail object_id=user.id %}">{{ user }}</a>
+				</td>
+				{% cycle '' ''  '</tr>' %}
+				{% endfor %}				
+				</table>
+			{% else %}
+			У пользователя нет друзей
+			{% endif %}
+		</p>
+		<p style="border-bottom: 1px dashed;"></p>
+		{% if friends_online %}
+		<p> 
+		Online:
+		<table>
+		    {% for user in friends_online %}
+			{% cycle '<tr style="vertical-align: bottom;">' '' ''  %}
+			<td style="text-align: center;" >
+
+			    {% if user.userpic %}
+				<img hspace="2" src="{{  user.userpic.thumbnail.url }}" />  <br />
+	    		    {% endif %}
+			    
+			    <a href="{% url people.views.myuser_detail object_id=user.id %}">{{ user }}</a>
+			    {% cycle '' ''  '</tr>' %}
+		    {% endfor %}
+		</table>
+		</p>
+		<p style="border-bottom: 1px dashed;"></p>
+		{% endif %}
+		<p>
+			{%if friendofs%}
+				В друзьях у:
+				{% for user in friendofs %}
+					<a href="{% url people.views.myuser_detail object_id=user.id %}">{{ user }}</a>
+				{% endfor %}
+			{% else %}
+				Ни у кого в друзьях не состоит
+			{% endif %}
+		</p>
+		<p style="border-bottom: 1px dashed;"></p>
+	</td>
+	<td valign="top">
+		<p> {{ object.first_name }} {{ object.last_name }} </p>
+		Почта: {{ object.email }} <br />
+		Последнее посещение:{{ object.last_login|date:"d M Y"|lower  }}	<br />
+		С нами с:{{ object.date_joined|date:"d M Y"|lower  }}	<br />
+		
+		<p style="border-bottom: 1px dashed;"></p>
+		<h2>Забор (<a href="{% url people.views.fence_write object.id %}">написать</a>)</h2>
+		{% if not fence_messages%}
+			<p> Здесь пока нет ничего!</p>
+		{% else %}
+			<ul>
+			{% for message in fence_messages%}
+				<li><h3>{{ message.author }}</h3>{{ message.body }}</li>
+			{%endfor%}
+			</ul>
+		{% endif %}
+		<p style="border-bottom: 1px dashed;"></p>
+	</td>
+	</tr>
+	</table>
+	
+	
+{% endblock %}
+
